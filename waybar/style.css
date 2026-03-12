@@ -1,0 +1,214 @@
+* {
+    font-family: "JetBrains Mono Nerd Font", monospace;
+    font-size: 13px;
+    margin-top: 1px;
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-bottom: 2px;
+    background-color:rgba(30,30,46,0.9);
+    background: transparent;
+}
+
+window#waybar {
+    background-color: transparent;
+    color: #000000;
+    transition-property: background-color;
+    transition-duration: .5s;
+    margin-bottom: 2px;
+}
+
+window#waybar.hidden {
+    opacity: 1;
+}
+
+tooltip {
+    background: rgba(30,30,46,0.9);
+    border: 1px solid #313244;
+    border-radius: 8px; 
+}
+
+tooltip label {
+    font-family: "JetBrains Mono Nerd Font", monospace;
+    font-size: 14px;
+    color: #ffffff;
+    padding: 8px;
+}
+
+button {
+    /* Use box-shadow instead of border so the text isn't offset */
+    box-shadow: inset 0 0 transparent;
+    /* Avoid rounded borders under each button name */
+    border: 1px hidden;
+    border-radius: 0;
+}
+
+/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
+button:hover {
+    background: inherit;
+}
+
+#pulseaudio:hover {
+}
+
+#workspaces button {
+    padding: 0 6px;
+    color: #ffffff;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+#workspaces button.focused {
+    box-shadow: inset 0 0 #ffffff;
+}
+
+#custom-hyprLauncher,
+#custom-swaync,
+#clock,
+#battery,
+#cpu,
+#memory,
+#disk,
+#temperature,
+#backlight,
+#network,
+#pulseaudio,
+#wireplumber,
+#custom-media,
+#tray,
+#group-hardware,
+#mode,
+#idle_inhibitor,
+#scratchpad,
+#power-profiles-daemon,
+#mpris {
+    padding: 2px 8px 0px 8px;
+    color: #ffffff;
+    background-color:rgba(30,30,46,0.9);
+    border-radius: 8px;
+    border: 1px solid #313244;
+}
+
+#clock {
+    color: #ffffff;
+}
+
+#network {
+  min-width: 175px;
+}
+
+#window {
+  padding:0 10px;
+  color: #ffffff;
+  margin: 0 4px;
+  background-color: transparent;
+  padding: 0 10px;
+  padding-bottom: 3px;
+}
+
+#battery,
+#memory,
+#cpu,
+#temperature {
+      margin: 0 3px;
+}
+
+#window,
+#workspaces {
+  padding-top: 5px;
+  background-color: rgba(30,30,46,0.9);
+  font-size: 8;
+  border-radius: 8px;
+  border: 1px solid #313244;
+}
+
+
+#workspaces button.active {
+  color: #89b4fa ;
+}
+
+#workspaces button.urgent {
+  color: #900D09 ;
+}
+
+/* If workspaces is the leftest module, omit left margin */
+.modules-left > widget:first-child > #workspaces {
+    margin-left: 0px;
+}
+
+/* If workspaces is the rightmost module, omit right margin */
+.modules-right > widget:last-child > #workspaces {
+    margin-right: 0px;
+}
+
+#battery {
+    color: #ffffff;
+}
+
+#battery.charging, #battery.plugged {
+    color: #ffffff;
+}
+
+@keyframes blink {
+    to {
+        color: #ffffff;
+    }
+}
+
+/* Using steps() instead of linear as a timing function to limit cpu usage */
+#battery.critical:not(.charging) {
+    color: #ffffff;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: steps(12);
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+#power-profiles-daemon {
+    padding-right: 15px;
+}
+
+#power-profiles-daemon.performance {
+    color: #ffffff;
+}
+
+#power-profiles-daemon.balanced {
+    color: #ffffff;
+}
+
+#power-profiles-daemon.power-saver {
+    color: #ffffff;
+}
+
+#cpu {
+    color: #ffffff;
+}
+
+#pulseaudio {
+    color: #ffffff;
+}
+
+#pulseaudio.muted {
+    color: #ffffff;
+}
+
+#wireplumber {
+    color: #ffffff;
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+}
+
+#tray menu {
+    background-color: rgba(30,30,46,0.9);
+    color: #ffffff;
+}
+
+#mpris {
+  color: rgb(255,255,255);
+}

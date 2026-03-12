@@ -1,0 +1,83 @@
+{
+  "$schema": "/etc/swaync/configSchema.json",
+  "positionX": "right",
+  "positionY": "top",
+  "timeout": 5,
+  "layer": "overlay",
+  "control-center-layer": "top",
+  "layer-shell": true,
+  "layer-shell-cover-screen": true,
+  "cssPriority": "user",
+  "control-center-margin-top": 10,
+  "control-center-margin-bottom": 10,
+  "control-center-margin-right": 10,
+  "control-center-margin-left": 10,
+  "notification-2fa-action": true,
+  "notification-inline-replies": false,
+  "notification-window-width": 500,
+  "control-center-width": 500,
+  "control-center-height": 600,
+  "fit-to-screen": true,
+  "relative-timestamps": true,
+  "image-visibility": "when-available",
+  "transition-time": 200,
+  "hide-on-clear": false,
+  "hide-on-action": true,
+  "script-fail-notify": true,
+  "notification-icon-size": 64,
+  "widgets": [
+    "title",
+    "mpris",
+    "buttons-grid",
+    "volume",
+    "backlight",
+    "notifications"
+  ],
+  "widget-config": {
+    "title": {
+      "text": "Control Panel",
+      "clear-all-button": true,
+      "button-text": ""
+    },
+    "mpris": {
+      "image-size": 96,
+      "image-radius": 12
+    },
+    "volume": {
+      "label": ""
+    },
+    "backlight": {
+      "label": ""
+    },
+    "buttons-grid": {
+      "actions": [
+        {
+          "label": "",
+          "type": "toggle",
+          "active": true,
+          "command": "sh -c 'nmcli radio wifi | grep -q enabled && nmcli radio wifi off || nmcli radio wifi on'",
+          "update-command": "nmcli radio wifi | grep -q 'enabled' && echo true || echo false"
+        },
+        {
+          "label": "",
+          "type": "toggle",
+          "active": true,
+          "command": "sh -c 'bluetoothctl show | grep -q \"Powered: yes\" && bluetoothctl power off || bluetoothctl power on'",
+          "update-command": "sh -c 'LC_ALL=C bluetoothctl show | grep -q \"Powered: yes\" && echo true || echo false'"
+        },
+        {
+          "label": "",
+          "type": "toggle",
+          "active": true,
+          "command": "swaync-client -d",
+          "update-command": "swaync-client -D"
+        },
+        {
+          "label": "",
+          "command": "sh -c 'swaync-client -cp && sleep 0.5 && /home/savvy/rice/scripts/screenshot.sh'",
+          "type": "button"
+        }
+      ]
+    }
+  }
+}

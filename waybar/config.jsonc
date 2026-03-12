@@ -1,0 +1,210 @@
+{
+    "layer": "top", 
+    "position": "top", 
+    "height": 36, 
+    "width": 1920, 
+    "spacing": 6, 
+ 
+
+    "modules-left": [
+        "custom/hyprLauncher",
+        "power-profiles-daemon",
+        "hyprland/workspaces",
+    ],
+
+    "modules-center": [
+        "clock", 
+        "mpris",
+    ],
+
+    "modules-right": [
+        "network",
+        "backlight",
+        "pulseaudio",
+        "group/hardware",
+        "tray",
+        "custom/swaync"
+    ],
+
+    "hyprland/window": {
+        "max-length": 50,
+    },
+
+    "custom/swaync": {
+       "tooltip": false,
+       "format": "",
+       "format-icons": {
+            "notification": "",
+            "none": ""
+       },
+        "return-type": "json",
+        "exec": "swaync-client -swb",
+        "on-click": "swaync-client -t",
+        "escape": true
+    },
+
+    "hyprland/workspaces": {
+         "interval": 1,
+         "disable-scroll": false,
+         "all-outputs": true,
+         "warp-on-scroll": false,
+         "format": "<sup>{icon}</sup>{windows}",
+         "window-rewrite-default": "󰊲",
+         "format-window-seperator": "\n",
+          "window-rewrite": {
+            "title<.*Browser.*>": "",
+	          "title<.*Firefox.*>": "󰈹",
+            "neovim": "",
+            "nvim": "",
+            "class<spotify>": "",
+            "class<discord> title<.*discord.*>": "",
+            "kitty": "",
+            "foot": "",
+            "minecraft": "󰍳",
+            "notion": "",
+            "dolphin": "",
+            "code": "",
+          },
+     },
+
+    "custom/hyprLauncher": {
+      "format": " 󰲋 ",
+      "tooltip": true,
+      "tooltip-format": "Search Application",
+      "on-click": "rofi -show drun -p 'Search For Application:' -config /home/savvy/dotfiles/rice/rofi/application.rasi"
+    },
+
+    "group/hardware": {
+        "orientation": "horizontal",
+        "drawer": {
+          "transition-duration": 500,
+          "transition-left-to-right": false,
+        },
+        "modules": [
+          "battery",
+          "cpu",
+          "memory",
+          "temperature",
+        ]
+    },
+
+    "mpris": {
+     "interval": 1,
+     "format": "{player_icon}  {status_icon}   {title}",
+      "status-icons": {
+           "playing": "",
+           "paused": ""
+      },
+      "max-length":25,
+      "on-click": "playerctl play-pause",
+      "on-scroll-down": "playerctl next",
+      "on-scroll-up": "playerctl previous",
+      "player-icons": {
+        "spotify": ""
+      }
+    },
+
+    "tray": {
+        "icon-size": 18,
+        "spacing": 10,
+    },
+
+    "clock": {
+        "format": " {:%b-%d , %H:%M} ",
+        "tooltip-format": "<tt><small>{calendar}</small></tt>",
+        "calendar": {
+            "mode": "month",
+            "weeks-pos": "left",
+            "on-scroll": 1,
+            "format": {
+                "months":     "<span color='#ffffff'><b>{}</b></span>",
+                "days":       "<span color='#eeeeee'>{}</span>",
+                "weeks":      "<span color='#555555'>W{}</span>",
+                "weekdays":   "<span color='#ffffff'><b>{}</b></span>",
+                "today":      "<span color='#89b4fa'><b>{}</b></span>"
+            }
+        },
+        "actions": {
+            "on-scroll-up": "shift_up",
+            "on-scroll-down": "shift_down"
+        }
+    },
+
+    "cpu": {
+        "format": "{usage}% ",
+    },
+
+    "memory": {
+        "format": "{}%  " 
+    },
+
+    "temperature": {
+        "critical-threshold": 80,
+        "format": "{temperatureC}°C {icon}",
+        "format-icons": ["", "", ""]
+    },
+
+    "backlight": {
+        "format": "{icon}",
+        "format-icons": ["", "", "", "", "", "", "", "", ""]
+    },
+
+    "battery": {
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{capacity}% {icon}",
+        "format-full": "{capacity}% {icon}",
+        "format-charging": "{capacity}% ",
+        "format-plugged": "{capacity}% ",
+        "format-alt": "{time} {icon}",
+        "format-icons": ["", "", "", "", ""]
+    },
+
+    "power-profiles-daemon": {
+      "format": "{icon}",
+      "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+      "tooltip": true,
+      "format-icons": {
+        "default": "",
+        "performance": "",
+        "balanced": "",
+        "power-saver": ""
+      }
+    },
+
+    "network": {
+        "interval": 1,
+        "format-wifi": "<span color='#3DED97'> {bandwidthUpBits}</span> <span color='#ff2052'> {bandwidthDownBits}</span>   ",
+        "format-ethernet": "{bandwidthUpBits} {bandwidthDownBits}   ",
+        "format-disconnected": "Disconnected ⚠",
+        "tooltip": false,
+        "on-click": "$HOME/dotfiles/scripts/rowifi.sh"
+    },
+
+    "pulseaudio": {
+        "format": "{volume}% {icon}",
+        "format-bluetooth": "{volume}% {icon}",
+        "format-bluetooth-muted": " {icon}",
+        "format-muted": " ",
+        "format-icons": {
+            "default": [" ", " ", " "]
+        },
+        "on-click": "pavucontrol"
+    },
+
+    "custom/power": {
+        "format" : "⏻ ",
+    		"tooltip": false,
+		    "menu": "on-click",
+		    "menu-file": "$HOME/.config/waybar/power_menu.xml", // Menu file in resources folder
+		    "menu-actions": {
+			      "shutdown": "shutdown",
+			      "reboot": "reboot",
+			      "suspend": "systemctl suspend",
+			      "hibernate": "systemctl hibernate"
+		    }
+    }
+}
+
