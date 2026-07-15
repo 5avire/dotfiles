@@ -1,0 +1,10 @@
+{
+    "workspace": {
+        "library": [
+            "/home/savvy/dotfiles/hypr/"
+        ]
+    },
+    "diagnostics": {
+        "globals": ["hl"]
+    }
+}

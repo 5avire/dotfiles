@@ -1,0 +1,131 @@
+configuration {
+    modi: "drun,run,filebrowser,window";
+    show-icons: true;
+    drun-display-format: "{name}";
+    window-format: "{w} · {c} · {t}";
+}
+
+* {
+    font: "JetBrains Mono Nerd 14";
+
+    background: #1a1a1e;
+    foreground: #e0f0ff;
+
+    selected: rgba(205,214,244,0.20);
+    selected-border: rgba(205,214,244,0.35);
+
+    active: #cdd6f4;
+    urgent: #8D0083;
+    border: #cdd6f4;
+
+    spacing: 10px;
+}
+
+window {
+    location: center;
+    anchor: center;
+    width: 40%;
+    height: 40%;
+    border: 2px;
+    border-radius: 2px;
+    border-color: @border;
+    background-color: @background;
+}
+
+mainbox {
+    background-color: transparent;
+    spacing: 0px;
+    children: [ "inputbar", "message", "listview" ];
+}
+
+inputbar {
+    background-color: transparent;
+    text-color: @foreground;
+    padding: 15px;
+    children: [ "textbox-prompt-colon", "entry" ];
+}
+
+textbox-prompt-colon {
+    expand: false;
+    str: "";
+}
+
+entry {
+    background-color: transparent;
+    text-color: @foreground;
+    placeholder: "";
+    placeholder-color: rgba(224,240,255,0.45);
+    cursor: text;
+}
+
+message {
+    background-color: transparent;
+    margin: 0px 15px;
+}
+
+textbox {
+    background-color: transparent;
+    text-color: @foreground;
+}
+
+listview {
+    background-color: transparent;
+    columns: 1;
+    lines: 10;
+    cycle: true;
+    dynamic: true;
+    scrollbar: false;
+    spacing: 8px;
+    padding: 10px 15px 15px 15px;
+}
+
+element {
+    background-color: transparent;
+    text-color: @foreground;
+    border-radius: 2px;
+    padding: 12px;
+    cursor: pointer;
+}
+
+element normal.normal {
+    background-color: transparent;
+    text-color: @foreground;
+}
+
+element alternate.normal {
+    background-color: transparent;
+}
+
+element selected.normal {
+    background-color: @selected;
+    border: 2px;
+    border-color: @selected-border;
+    text-color: @foreground;
+}
+
+element-icon {
+    background-color: transparent;
+    size: 24px;
+    margin: 0px 15px 0px 10px;
+}
+
+element-text {
+    background-color: transparent;
+    text-color: inherit;
+    vertical-align: 0.5;
+    horizontal-align: 0.0;
+}
+
+scrollbar {
+    background-color: transparent;
+    width: 4px;
+}
+
+handle {
+    background-color: rgba(205,214,244,0.35);
+    border-radius: 8px;
+}
+
+mode-switcher {
+    enabled: false;
+}
