@@ -132,7 +132,7 @@
 
     "backlight": {
         "format": "{icon}",
-        "tooltip": false,
+        "tooltip-format": "{percent}%",
         "format-icons": ["", "", "", "", "", "", "", "", ""]
     },
 
