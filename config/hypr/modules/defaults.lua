@@ -6,12 +6,12 @@ appPicker        = "rofi -show drun -config application.rasi"
 
 controlPanel     = ""
 
-volumeUp         = "wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
-volumeDown       = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
-volumeMuteToggle = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+volumeUp         = "~/dots/scripts/volume.sh raise"
+volumeDown       = "~/dots/scripts/volume.sh lower"
+volumeMuteToggle = "~/dots/scripts/volume.sh mute"
 
-brightnessUp     = "brightnessctl -e4 -n2 set 5%+"
-brightnessDown   = "brightnessctl -e4 -n2 set 5%-"
+brightnessUp     = "~/dots/scripts/brightness.sh raise"
+brightnessDown   = "~/dots/scripts/brightness.sh lower"
 
 emojiPicker      = "rofimoji"
 clipboard        = "~/dots/scripts/clipboard.sh"

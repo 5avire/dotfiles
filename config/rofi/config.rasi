@@ -6,7 +6,7 @@ configuration {
 }
 
 * {
-    font: "JetBrains Mono Nerd 14";
+    font: "JetBrains Mono Nerd 12";
 
     background: #1a1a1e;
     foreground: #e0f0ff;
