@@ -9,6 +9,8 @@ link_dir() {
     local src_dir="$1"
     local dest_dir="$2"
 
+    shopt -s dotglob
+
     for item in "$src_dir"/*; do
         [ -e "$item" ] || continue
         name=$(basename "$item")
@@ -24,6 +26,8 @@ link_dir() {
         ln -s "$item" "$target"
         echo "Linked: $target -> $item"
     done
+
+    shopt -u dotglob
 }
 
 mkdir -p "$HOME/.config"
