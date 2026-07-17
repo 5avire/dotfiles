@@ -22,3 +22,7 @@
 * wtype
 * wl-copy
 * cliphist
+
+
+
+AI was used for some of the scripts cause I'm lazy
