@@ -73,6 +73,27 @@ hl.window_rule({
 })
 
 hl.window_rule({
+    name  = "blender",
+    match = { class = "blender" },
+    workspace = "3 silent",
+    opacity = 1
+})
+
+hl.window_rule({
+    name  = "Minecraft",
+    match = { class = "Minecraft*" },
+    workspace = "3 silent",
+    opacity = 1
+})
+
+hl.window_rule({
+    name  = "SKLauncher",
+    match = { class = "*SKlauncher*" },
+    workspace = "3 silent",
+    opacity = 1
+})
+
+hl.window_rule({
     name  = "Discord",
     match = { class = "vesktop" },
     workspace = "4 silent"

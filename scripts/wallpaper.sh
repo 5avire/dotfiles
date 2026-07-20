@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 set -euo pipefail
 
 WALLPAPER_DIR="$HOME/dots/wallpapers"

@@ -22,3 +22,4 @@
 * wtype
 * wl-copy
 * cliphist
+* hyprpicker

@@ -43,6 +43,7 @@ hl.bind(mainMod .. " + V", hl.dsp.exec_cmd(clipboard))
 hl.bind(mainMod .. " + Period", hl.dsp.exec_cmd(emojiPicker))
 hl.bind(mainMod .. " + Print", hl.dsp.exec_cmd(screenShot))
 hl.bind(mainMod .. " + N", hl.dsp.exec_cmd(controlPanel))
+hl.bind(mainMod .. " + C", hl.dsp.exec_cmd(colorPicker))
 
 -- Laptop multimedia keys for volume and LCD brightness
 hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd(volumeUp), { locked = true, repeating = true })
