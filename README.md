@@ -23,3 +23,5 @@
 * wl-copy
 * cliphist
 * hyprpicker
+
+AI was used for some of the scripts cause I'm lazy
