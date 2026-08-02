@@ -2,7 +2,7 @@
 
 sources=(
     "$HOME/dev:1:1"
-    "$HOME/dotfiles:1:2"
+    "$HOME/dots:1:2"
 )
 
 candidates=()

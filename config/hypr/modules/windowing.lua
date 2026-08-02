@@ -43,6 +43,12 @@ for i = 1, 5 do
     hl.workspace_rule({ workspace = tostring(i), persistent = true })
 end
 
+hl.window_rule({
+    name = "Luna",
+    match = { title = "Luna Engine"},
+
+    float = true
+})
 
 hl.window_rule({
     name  = "move-hyprland-run",
@@ -50,13 +56,6 @@ hl.window_rule({
 
     move  = "20 monitor_h-120",
     float = true,
-})
-
-hl.window_rule({
-    name = "OpenGL",
-    match = { title = "LearnOpenGL"},
-
-    float = true
 })
 
 hl.window_rule({
@@ -76,19 +75,13 @@ hl.window_rule({
     name  = "blender",
     match = { class = "blender" },
     workspace = "3 silent",
+    size = { 800, 600 },
     opacity = 1
 })
 
 hl.window_rule({
     name  = "Minecraft",
     match = { class = "Minecraft*" },
-    workspace = "3 silent",
-    opacity = 1
-})
-
-hl.window_rule({
-    name  = "SKLauncher",
-    match = { class = "*SKlauncher*" },
     workspace = "3 silent",
     opacity = 1
 })
