@@ -94,6 +94,6 @@ hl.window_rule({
 
 hl.window_rule({
     name  = "Spotify",
-    match = { class = "Spotify" },
+    match = { class = "spotify" },
     workspace = "5 silent"
 })

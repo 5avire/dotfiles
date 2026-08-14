@@ -15,5 +15,5 @@ brightnessDown   = "~/dots/scripts/brightness.sh lower"
 
 emojiPicker      = "rofimoji"
 clipboard        = "~/dots/scripts/clipboard.sh"
-screenShot       = "hyprshot -m region"
+screenShot       = "hyprshot -m region -o ~/Pictures/Screenshot"
 colorPicker      = "hyprpicker | wl-copy"

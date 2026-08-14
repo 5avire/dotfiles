@@ -13,14 +13,14 @@ return {
       enabled = true,
       win = {
         position = "left",
-        width = 30,
+        width = 20,
       },
     },
     terminal = {
       enabled = true,
       win = {
         position = "bottom",
-        height = 0.3,
+        height = 0.2,
       },
     },
     bigfile = { enabled = false },
