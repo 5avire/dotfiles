@@ -88,7 +88,7 @@ return {
         vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = '[S]earch [R]esume' })
         vim.keymap.set('n', '<leader>f.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
         vim.keymap.set('n', '<leader>fc', builtin.commands, { desc = '[S]earch [C]ommands' })
-        vim.keymap.set('n', '<leader>e', builtin.buffers, { desc = '[ ] Find existing buffers' })
+        vim.keymap.set('n', '<leader>fe', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
         -- This runs on LSP attach per buffer (see main LSP attach function in 'neovim/nvim-lspconfig' config for more info,
         -- it is better explained there). This allows easily switching between pickers if you prefer using something else!
