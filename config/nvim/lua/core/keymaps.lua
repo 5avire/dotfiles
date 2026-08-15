@@ -33,6 +33,11 @@ vim.keymap.set('n', '<leader>lw', '<cmd>set wrap!<CR>', optsDesc("Toggle Line Wr
 vim.keymap.set('n', 'x', '"_x', opts)
 
 
+-- Move Selected lines up/down with Alt J/K
+vim.keymap.set("v", "<A-j>", ":m '>+1<CR>gv=gv")
+vim.keymap.set("v", "<A-k>", ":m '<-2<CR>gv=gv")
+
+
 -- Resizing buffers with Arrow Keys cuz ain't no way I'll remember all binds
 vim.keymap.set('n', '<Up>', ':resize -2<CR>', optsDesc("Resize: +2 step vertically"))
 vim.keymap.set('n', '<Down>', ':resize +2<CR>', optsDesc("Resize: -2 step vertically"))
