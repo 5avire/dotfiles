@@ -25,6 +25,10 @@ local function optsDesc(desc)
 end
 
 
+-- Add line below be in normal mode
+vim.keymap.set('n', '<Enter>', 'o<ESC>')
+
+
 -- Toggle Line Wrap
 vim.keymap.set('n', '<leader>lw', '<cmd>set wrap!<CR>', optsDesc("Toggle Line Wrap"))
 

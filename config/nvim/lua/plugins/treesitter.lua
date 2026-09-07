@@ -1,59 +1,83 @@
 return {
-    'nvim-treesitter/nvim-treesitter',
+    "nvim-treesitter/nvim-treesitter",
     lazy = false,
-    build = ':TSUpdate',
-    branch = 'main',
+    branch = "main",
+    build = ":TSUpdate",
+
     config = function()
-        local parsers = {
-            'bash',
-            'c',
-            'diff',
-            'html',
-            'lua',
-            'luadoc',
-            'markdown',
-            'markdown_inline',
-            'query',
-            'vim',
-            'cpp',
-            'python',
-            'cmake',
-            'sql',
-            'rust',
-            'regex',
-            'java',
-            'json',
-            'yaml',
-            'gitignore',
-        }
-        local installed = require('nvim-treesitter')
-        local to_install = vim.tbl_filter(function(p)
-            return not vim.tbl_contains(installed, p)
-        end, parsers)
+        local ts = require("nvim-treesitter")
 
-        if #to_install > 0 then
-            require('nvim-treesitter').install(to_install)
-        end
+        -- Where parsers/queries are installed.
+        ts.setup({
+            install_dir = vim.fn.stdpath("data") .. "/site",
+        })
 
-        -- treesitter for everything
-        vim.api.nvim_create_autocmd('FileType', {
-            callback = function(args)
-                local buf, filetype = args.buf, args.match
-                local language = vim.treesitter.language.get_lang(filetype)
-                if not language then return end
-                if not vim.treesitter.language.add(language) then return end
-                vim.treesitter.start(buf, language)
-                vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        -- Install the parsers we want.
+        ts.install({
+            "bash",
+            "c",
+            "cpp",
+            "cmake",
+            "diff",
+            "html",
+            "java",
+            "json",
+            "lua",
+            "luadoc",
+            "markdown",
+            "markdown_inline",
+            "python",
+            "query",
+            "regex",
+            "rust",
+            "sql",
+            "vim",
+            "yaml",
+            "gitignore",
+        })
+
+        -- Enable Treesitter + folding.
+        vim.api.nvim_create_autocmd("FileType", {
+            pattern = {
+                "bash",
+                "c",
+                "cpp",
+                "cmake",
+                "diff",
+                "html",
+                "java",
+                "json",
+                "lua",
+                "markdown",
+                "python",
+                "rust",
+                "sql",
+                "vim",
+                "yaml",
+            },
+
+            callback = function()
+                -- Start Treesitter.
+                vim.treesitter.start()
+
+                -- Treesitter folding.
+                vim.wo.foldmethod = "expr"
+                vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+
+                vim.opt.foldenable = true
+                vim.opt.foldlevel = 99
+                vim.opt.foldlevelstart = 99
             end,
         })
 
-        -- override indentation for c/cpp with cindent AFTER treesitter
-        vim.api.nvim_create_autocmd('FileType', {
-            pattern = { 'cpp', 'c' },
+        -- C/C++ indentation.
+        vim.api.nvim_create_autocmd("FileType", {
+            pattern = { "c", "cpp" },
+
             callback = function()
                 vim.bo.cindent = true
-                vim.bo.indentexpr = ''
-                vim.opt_local.cinoptions = 'N+s'
+                vim.bo.indentexpr = ""
+                vim.opt_local.cinoptions = "N+s"
             end,
         })
     end,

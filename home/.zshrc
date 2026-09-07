@@ -59,6 +59,40 @@ alias gc="git commit -m"
 alias gp="git push"
 alias gl="git log --oneline --graph"
 
+# ── nvim/vim in cmdlind ───────────────────────────────────────────────────────
+# ── Why tf did I not know this before??? ──────────────────────────────────────
+bindkey -v
+export KEYTIMEOUT=1
+
+autoload edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd v edit-command-line
+
+export VI_MODE_SET_CURSOR=true
+
+function zle-keymap-select {
+  if [[ ${KEYMAP} == vicmd ]]; then
+    echo -ne '\e[2 q' # block
+  else
+    echo -ne '\e[6 q' # beam
+  fi
+}
+zle -N zle-keymap-select
+
+function zle-line-init() {
+  zle -K viins
+  echo -ne '\e[6 q'
+}
+zle -N zle-line-init
+
+# yank to system clipboard
+function vi-yank-clipboard {
+  zle vi-yank
+  echo "$CUTBUFFER" | wl-copy
+}
+zle -N vi-yank-clipboard
+bindkey -M vicmd 'y' vi-yank-clipboard
+
 # ── p10k ──────────────────────────────────────────────────────────────────────
 POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

@@ -13,6 +13,7 @@ volumeMuteToggle = "~/dots/scripts/volume.sh mute"
 brightnessUp     = "~/dots/scripts/brightness.sh raise"
 brightnessDown   = "~/dots/scripts/brightness.sh lower"
 
+kamojiPicker     = "rofimoji --files kaomoji"
 emojiPicker      = "rofimoji"
 clipboard        = "~/dots/scripts/clipboard.sh"
 screenShot       = "hyprshot -m region -o ~/Pictures/Screenshot"

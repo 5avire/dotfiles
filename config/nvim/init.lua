@@ -29,4 +29,5 @@ require('lazy').setup({
     require 'plugins.cmaketools',
     require 'plugins.vim-tmux-navigation',
     require 'plugins.themes.catppuccin',
+    require 'plugins.custom.file-switcher',
 })

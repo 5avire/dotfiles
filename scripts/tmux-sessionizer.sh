@@ -3,6 +3,7 @@
 sources=(
     "$HOME/dev:1:1"
     "$HOME/dots:1:2"
+    "$HOME/git:1:1"
 )
 
 candidates=()

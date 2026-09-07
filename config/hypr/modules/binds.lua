@@ -41,6 +41,7 @@ hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 -- Extras
 hl.bind(mainMod .. " + V", hl.dsp.exec_cmd(clipboard))
 hl.bind(mainMod .. " + Period", hl.dsp.exec_cmd(emojiPicker))
+hl.bind(mainMod .. " + SHIFT + Period", hl.dsp.exec_cmd(kamojiPicker))
 hl.bind(mainMod .. " + Print", hl.dsp.exec_cmd(screenShot))
 hl.bind(mainMod .. " + N", hl.dsp.exec_cmd(controlPanel))
 hl.bind(mainMod .. " + C", hl.dsp.exec_cmd(colorPicker))
