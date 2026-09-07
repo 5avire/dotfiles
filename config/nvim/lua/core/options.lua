@@ -37,6 +37,7 @@ vim.o.conceallevel = 0
 vim.o.fileencoding = 'utf-8'
 vim.o.cmdheight = 1
 vim.o.autoindent = true
+vim.o.winborder = "rounded"
 vim.opt.shortmess:append 'c'
 vim.opt.iskeyword:append '-'
 

@@ -26,20 +26,9 @@ local function switch_file()
 
     if #files > 0 then
         vim.cmd("edit " .. vim.fn.fnameescape(files[1]))
-        return
+    else
+        vim.notify("No matching source/header file found", vim.log.levels.INFO)
     end
-
-    local target = targets[ext][1]
-
-    vim.ui.select(
-        { "Create " .. name .. "." .. target, "Cancel" },
-        { prompt = "File not found:" },
-        function(choice)
-            if choice and choice:sub(1, 6) == "Create" then
-                vim.cmd("edit " .. vim.fn.fnameescape(name .. "." .. target))
-            end
-        end
-    )
 end
 
 vim.keymap.set("n", "<leader>\\", switch_file, {
