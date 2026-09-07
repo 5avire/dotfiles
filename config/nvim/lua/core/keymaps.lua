@@ -15,7 +15,7 @@ local opts = { noremap = true, silent = true }
 vim.keymap.set('n', '<leader>sl', '<cmd>SessionManager load_last_session<CR>', { desc = 'Open last session' })
 
 
--- Session
+-- Idk man
 vim.keymap.set('n', '<leader>i', '<cmd>InspectTree<CR>', { desc = 'Toggle Inspect Tree' })
 
 
@@ -23,10 +23,6 @@ vim.keymap.set('n', '<leader>i', '<cmd>InspectTree<CR>', { desc = 'Toggle Inspec
 local function optsDesc(desc)
     return vim.tbl_extend('force', opts, { desc = desc })
 end
-
-
--- Add line below be in normal mode
-vim.keymap.set('n', '<Enter>', 'o<ESC>')
 
 
 -- Toggle Line Wrap

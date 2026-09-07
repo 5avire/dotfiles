@@ -25,9 +25,9 @@ require('lazy').setup({
     require 'plugins.blankline',
     require 'plugins.misc',
     require 'plugins.dap',
+    require 'plugins.theme',
     require 'plugins.snacks',
     require 'plugins.cmaketools',
     require 'plugins.vim-tmux-navigation',
-    require 'plugins.themes.catppuccin',
     require 'plugins.custom.file-switcher',
 })
