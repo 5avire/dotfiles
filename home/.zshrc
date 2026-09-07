@@ -43,7 +43,7 @@ alias ..="cd .."
 alias ...="cd ../.."
 alias l="ls -lah"
 alias ls='ls --color=auto'
-alias ts="~/dots/scripts/tmux-sessionizer.sh"
+alias ts="~/dots/config/tmux/scripts/tmux-sessionizer.sh"
 
 # tools
 alias vim="nvim"
