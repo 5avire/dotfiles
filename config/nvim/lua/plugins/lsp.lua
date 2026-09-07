@@ -1,152 +1,332 @@
 return {
-    'neovim/nvim-lspconfig',
-    dependencies = {
-        {
-            'mason-org/mason.nvim',
-            ---@diagnostic disable-next-line: missing-fields
-            opts = {},
-        },
-        'mason-org/mason-lspconfig.nvim',
-        'WhoIsSethDaniel/mason-tool-installer.nvim',
-        { 'j-hui/fidget.nvim', opts = {} },
+    {
+        "williamboman/mason.nvim",
+        cmd = "Mason",
+        opts = {},
     },
-    config = function()
-        vim.api.nvim_create_autocmd('LspAttach', {
-            group = vim.api.nvim_create_augroup('lsp-attach', { clear = true }),
-            callback = function(event)
-                local map = function(keys, func, desc, mode)
-                    mode = mode or 'n'
-                    vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
-                end
 
-                map('gR', vim.lsp.buf.rename,        '[R]ename')
-                map('gA', vim.lsp.buf.code_action,   'Code [A]ction', { 'n', 'x' })
-                map('gD', vim.lsp.buf.declaration,   '[G]oto [D]eclaration')
-                map('gI', vim.lsp.buf.implementation,'[G]oto [I]mplementation')
-                map('gT', vim.lsp.buf.type_definition,'[G]oto [T]ype Definition')
+    {
+        "williamboman/mason-lspconfig.nvim",
+        dependencies = {
+            "williamboman/mason.nvim",
+            "neovim/nvim-lspconfig",
+        },
+        opts = {
+            automatic_enable = false,
+        },
+    },
 
-                local client = vim.lsp.get_client_by_id(event.data.client_id)
+    {
+        "neovim/nvim-lspconfig",
+        event = { "BufReadPre", "BufNewFile" },
 
-                if client and client:supports_method('textDocument/documentHighlight', event.buf) then
-                    vim.lsp.inlay_hint.enable(true, { bufnr = event.buf })
-                    local au = vim.api.nvim_create_augroup('lsp-highlight', { clear = false })
-                    vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
-                        buffer = event.buf,
-                        group = au,
-                        callback = vim.lsp.buf.document_highlight,
-                    })
-                    vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
-                        buffer = event.buf,
-                        group = au,
-                        callback = vim.lsp.buf.clear_references,
-                    })
-                    vim.api.nvim_create_autocmd('LspDetach', {
-                        group = vim.api.nvim_create_augroup('lsp-detach', { clear = true }),
-                        callback = function(event2)
-                            vim.lsp.buf.clear_references()
-                            vim.api.nvim_clear_autocmds { group = 'lsp-highlight', buffer = event2.buf }
-                        end,
-                    })
-                end
+        config = function()
+            ----------------------------------------------------------------
+            -- Diagnostics
+            ----------------------------------------------------------------
 
-                if client and client:supports_method('textDocument/inlayHint', event.buf) then
-                    map('<leader>th', function()
-                        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
-                    end, '[T]oggle Inlay [H]ints')
-                end
-            end,
-        })
+            vim.diagnostic.config({
+                severity_sort = true,
 
-        -- ── Mason-managed servers ─────────────────────────────────────────────
-        local servers = {
-            clangd = {
-                cmd = {
-                    'clangd',
-                    '--header-insertion=never',
-                    '--header-insertion-decorators=false',
+                virtual_text = true,
+                underline = true,
+
+                signs = {
+                    text = {
+                        [vim.diagnostic.severity.ERROR] = "󰅚",
+                        [vim.diagnostic.severity.WARN] = "󰀪",
+                        [vim.diagnostic.severity.INFO] = "󰋽",
+                        [vim.diagnostic.severity.HINT] = "󰌶",
+                    },
                 },
+
+                float = {
+                    border = "rounded",
+                    source = true,
+                },
+
+                update_in_insert = false,
+            })
+
+            ----------------------------------------------------------------
+            -- Server configuration
+            ----------------------------------------------------------------
+
+            vim.lsp.config("clangd", {
+                cmd = {
+                    "clangd",
+                    "--header-insertion=never",
+                    "--header-insertion-decorators=false",
+                },
+
                 on_init = function(client)
+                    -- Formatting is handled separately.
                     client.server_capabilities.documentFormattingProvider = false
-                    client.capabilities.textDocument.synchronization.willSave = false
-                    client.capabilities.textDocument.synchronization.willSaveWaitUntil = false
+                    client.server_capabilities.documentRangeFormattingProvider = false
                 end,
-            },
-            gopls        = {},
-            pyright      = {},
-            rust_analyzer= {},
-            ts_ls        = {},
-            ruff         = {},
-            pylsp = {
+            })
+
+            vim.lsp.config("lua_ls", {
                 settings = {
-                    pylsp = {
-                        plugins = {
-                            pyflakes    = { enabled = false },
-                            pycodestyle = { enabled = false },
-                            autopep8    = { enabled = false },
-                            yapf        = { enabled = false },
-                            mccabe      = { enabled = false },
-                            pylsp_mypy  = { enabled = false },
-                            pylsp_black = { enabled = false },
-                            pylsp_isort = { enabled = false },
+                    Lua = {
+                        codeLens = {
+                            enable = true,
+                        },
+
+                        hint = {
+                            enable = true,
+                            semicolon = "Disable",
                         },
                     },
                 },
-            },
-            lua_ls = {
-                on_init = function(client)
-                    if client.workspace_folders then
-                        local path = client.workspace_folders[1].name
-                        if path ~= vim.fn.stdpath 'config'
-                            and (vim.uv.fs_stat(path .. '/.luarc.json')
-                              or vim.uv.fs_stat(path .. '/.luarc.jsonc'))
-                        then return end
+            })
+
+            vim.lsp.config("pyright", {
+                settings = {
+                    pyright = {
+                        disableTaggedHints = true,
+                    },
+
+                    python = {
+                        analysis = {
+                            autoSearchPaths = true,
+                            diagnosticMode = "openFilesOnly",
+                            useLibraryCodeForTypes = true,
+                        },
+                    },
+                },
+            })
+
+            vim.lsp.config("rust_analyzer", {
+                settings = {
+                    ["rust-analyzer"] = {
+                        lens = {
+                            enable = true,
+
+                            debug = {
+                                enable = true,
+                            },
+
+                            implementations = {
+                                enable = true,
+                            },
+
+                            references = {
+                                adt = {
+                                    enable = true,
+                                },
+
+                                enumVariant = {
+                                    enable = true,
+                                },
+
+                                method = {
+                                    enable = true,
+                                },
+
+                                trait = {
+                                    enable = true,
+                                },
+                            },
+
+                            run = {
+                                enable = true,
+                            },
+
+                            updateTest = {
+                                enable = true,
+                            },
+                        },
+                    },
+                },
+            })
+
+            vim.lsp.config("pylsp", {
+                settings = {
+                    pylsp = {
+                        plugins = {
+                            pyflakes = {
+                                enabled = false,
+                            },
+
+                            pycodestyle = {
+                                enabled = false,
+                            },
+
+                            autopep8 = {
+                                enabled = false,
+                            },
+
+                            yapf = {
+                                enabled = false,
+                            },
+
+                            mccabe = {
+                                enabled = false,
+                            },
+                        },
+                    },
+                },
+            })
+
+            vim.lsp.config("glsl_analyzer", {
+                cmd = { "glsl_analyzer" },
+                filetypes = { "glsl" },
+                root_markers = { ".git" },
+            })
+
+            ----------------------------------------------------------------
+            -- Enable servers
+            ----------------------------------------------------------------
+
+            vim.lsp.enable({
+                "clangd",
+                "lua_ls",
+                "pyright",
+                "ruff",
+                "gopls",
+                "rust_analyzer",
+                "ts_ls",
+                "pylsp",
+                "glsl_analyzer",
+            })
+
+            ----------------------------------------------------------------
+            -- LSP attach
+            ----------------------------------------------------------------
+
+            local group = vim.api.nvim_create_augroup(
+                "user-lsp-attach",
+                { clear = true }
+            )
+
+            vim.api.nvim_create_autocmd("LspAttach", {
+                group = group,
+
+                callback = function(event)
+                    local client =
+                        vim.lsp.get_client_by_id(event.data.client_id)
+
+                    if not client then
+                        return
                     end
-                    client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
-                        runtime = {
-                            version = 'LuaJIT',
-                            path = { 'lua/?.lua', 'lua/?/init.lua' },
-                        },
-                        workspace = {
-                            checkThirdParty = false,
-                            library = vim.tbl_extend('force', vim.api.nvim_get_runtime_file('', true), {
-                                '${3rd}/luv/library',
-                                '${3rd}/busted/library',
-                            }),
-                        },
-                    })
+
+                    local buf = event.buf
+
+                    local map = function(mode, lhs, rhs, desc)
+                        vim.keymap.set(mode, lhs, rhs, {
+                            buffer = buf,
+                            desc = "LSP: " .. desc,
+                        })
+                    end
+
+                    --------------------------------------------------------
+                    -- Navigation
+                    --------------------------------------------------------
+
+                    map("n", "gd", vim.lsp.buf.definition, "Goto Definition")
+                    map("n", "gD", vim.lsp.buf.declaration, "Goto Declaration")
+                    map("n", "gi", vim.lsp.buf.implementation, "Goto Implementation")
+                    map("n", "gt", vim.lsp.buf.type_definition, "Goto Type Definition")
+                    map("n", "gr", vim.lsp.buf.references, "Goto References")
+
+                    --------------------------------------------------------
+                    -- Information
+                    --------------------------------------------------------
+
+                    map("n", "K", vim.lsp.buf.hover, "Hover")
+
+                    --------------------------------------------------------
+                    -- Actions
+                    --------------------------------------------------------
+
+                    map("n", "<leader>rn", vim.lsp.buf.rename, "Rename")
+
+                    map(
+                        { "n", "x" },
+                        "<leader>ca",
+                        vim.lsp.buf.code_action,
+                        "Code Action"
+                    )
+
+                    --------------------------------------------------------
+                    -- Folding
+                    --
+                    -- Only configure LSP folding after the client has
+                    -- actually attached and confirmed support.
+                    --------------------------------------------------------
+
+                    if client:supports_method(
+                        "textDocument/foldingRange",
+                        buf
+                    ) then
+                        vim.opt_local.foldmethod = "expr"
+                        vim.opt_local.foldexpr =
+                            "v:lua.vim.lsp.foldexpr()"
+                    end
+
+                    --------------------------------------------------------
+                    -- Inlay hints
+                    --------------------------------------------------------
+
+                    if client:supports_method(
+                        "textDocument/inlayHint",
+                        buf
+                    ) then
+                        map("n", "<leader>th", function()
+                            vim.lsp.inlay_hint.enable(
+                                not vim.lsp.inlay_hint.is_enabled({
+                                    bufnr = buf,
+                                }),
+                                {
+                                    bufnr = buf,
+                                }
+                            )
+                        end, "Toggle Inlay Hints")
+                    end
+
+                    --------------------------------------------------------
+                    -- Document highlighting
+                    --------------------------------------------------------
+
+                    if client:supports_method(
+                        "textDocument/documentHighlight",
+                        buf
+                    ) then
+                        local highlight_group =
+                            vim.api.nvim_create_augroup(
+                                "lsp-document-highlight-" .. buf,
+                                { clear = true }
+                            )
+
+                        vim.api.nvim_create_autocmd(
+                            { "CursorHold", "CursorHoldI" },
+                            {
+                                buffer = buf,
+                                group = highlight_group,
+                                callback = vim.lsp.buf.document_highlight,
+                            }
+                        )
+
+                        vim.api.nvim_create_autocmd(
+                            { "CursorMoved", "CursorMovedI" },
+                            {
+                                buffer = buf,
+                                group = highlight_group,
+                                callback = vim.lsp.buf.clear_references,
+                            }
+                        )
+                    end
                 end,
-                settings = { Lua = {} },
-            },
-        }
+            })
 
-        -- ── System-installed servers ──────────────────
-        vim.lsp.config('neocmakelsp', {
-            cmd          = { 'neocmakelsp', 'stdio' },
-            filetypes    = { 'cmake' },
-            root_markers = { 'CMakeLists.txt', 'CMakeCache.txt', '.git' },
-        })
-        vim.lsp.enable('neocmakelsp')
+            ----------------------------------------------------------------
+            -- Folding defaults
+            ----------------------------------------------------------------
 
-        vim.lsp.config('glsl_analyzer', {
-            cmd          = { 'glsl_analyzer' },
-            filetypes    = { 'glsl', 'vert', 'frag', 'geom', 'comp' },
-            root_markers = { '.git' },
-        })
-        vim.lsp.enable('glsl_analyzer')
-
-        -- ── Mason setup ───────────────────────────────────────────────────────
-        local ensure_installed = vim.tbl_keys(servers)
-        vim.list_extend(ensure_installed, { 'stylua' })
-
-        require('mason-tool-installer').setup { ensure_installed = ensure_installed }
-
-        require('mason-lspconfig').setup {
-            handlers = {
-                function(server_name)
-                    local server = servers[server_name] or {}
-                    require('lspconfig')[server_name].setup(server)
-                end,
-            },
-        }
-    end,
+            vim.o.foldenable = true
+            vim.o.foldlevel = 99
+            vim.o.foldlevelstart = 99
+        end,
+    },
 }

@@ -57,3 +57,14 @@ vim.api.nvim_create_autocmd("TextYankPost", {
         vim.highlight.on_yank()
     end,
 })
+
+vim.filetype.add({
+    extension = {
+        vert = "glsl",
+        tesc = "glsl",
+        tese = "glsl",
+        frag = "glsl",
+        geom = "glsl",
+        comp = "glsl",
+    },
+})

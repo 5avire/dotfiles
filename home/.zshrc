@@ -47,6 +47,7 @@ alias ts="~/dots/config/tmux/scripts/tmux-sessionizer.sh"
 
 # tools
 alias vim="nvim"
+alias vi="nvim"
 alias nano="nvim"
 alias e="exit"
 alias ff="fastfetch"
